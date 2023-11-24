@@ -7,8 +7,10 @@ import com.bin.push.common.protocol.ReceiveMessaage;
 import com.bin.push.common.protocol.SendMessage;
 import com.bin.push.mybatis.base.model.Message;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 
@@ -34,18 +36,23 @@ public class PingResolver implements IResolver {
 //        }
 
         if (repository.exitsSessionId(receiveMessaage.getSessionId())) {
-            List<Message> messages = repository.listMessageBySessionId(receiveMessaage.getSessionId(), 30);
+            Date now = new Date();
+            Date begin = DateUtils.addMinutes(now, -30);
+            List<Message> messages = repository.listMessageBySessionId(receiveMessaage.getSessionId(), begin, now);
             if (messages.size() == 0) {
                 return MessageFactory.createPong();
             } else {
                 List<String> contents = Lists.newArrayList();
+                List<Long> ids = Lists.newArrayList();
                 for (Message message : messages) {
                     contents.add(message.getContent());
+                    ids.add(message.getId());
                 }
+                repository.sendMessage(ids, now);
                 return MessageFactory.createInfo(contents);
             }
         } else {
-            return  MessageFactory.createCloseMsg();
+            return MessageFactory.createCloseMsg();
         }
     }
 }

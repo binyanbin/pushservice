@@ -31,13 +31,20 @@ public class Repository {
         return sessionMapper.countByExample(example) > 0;
     }
 
-    public List<Message> listMessageBySessionId(String sessionId, int minute) {
-        Date now = new Date();
-        Date begin = DateUtils.addMinutes(now, -minute);
+    public List<Message> listMessageBySessionId(String sessionId, Date begin,Date end) {
+
         MessageExample example = new MessageExample();
         example.createCriteria().andSessionIdEqualTo(sessionId)
-                .andCreatedTimeBetween(begin, now).andSendTimeIsNull();
+                .andCreatedTimeBetween(begin, end).andSendTimeIsNull();
         return messageMapper.selectByExample(example);
+    }
+
+    public void sendMessage(List<Long> ids, Date now) {
+        MessageExample example = new MessageExample();
+        example.createCriteria().andIdIn(ids);
+        Message message = new Message();
+        message.setSendTime(now);
+        messageMapper.updateByExample(message, example);
     }
 
 
