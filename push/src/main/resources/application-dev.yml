@@ -1,0 +1,27 @@
+# database source
+spring:
+  datasource:
+    url: jdbc:mysql://47.112.5.178:3306/bzw_saas?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: QQsQQs123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+
+netty:
+  tcp:
+    port: 3333
+
+

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+    <!-- !!!! Driver Class Path !!!! -->
+    <!--注意驱动版本，如果是6版本，则不会生成enableDeleteByPrimaryKey，enableSelectByPrimaryKey，enableUpdateByPrimaryKey代码-->
+    <classPathEntry
+            location="C:\Users\yanbi\.m2\repository\mysql\mysql-connector-java\8.0.26\mysql-connector-java-8.0.26.jar"/>
+
+    <context id="mysql_material_context" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressAllComments" value="false"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- !!!! Database Configurations !!!! -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&amp;"
+                        userId="root" password="root"/>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- !!!! Model Configurations !!!! -->
+        <javaModelGenerator targetPackage="com.bin.push.mybatis.base.model" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+            <property name="mapUnderscoreToCamelCase" value="true"/>
+        </javaModelGenerator>
+
+        <!-- !!!! Mapper XML Configurations !!!! -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- !!!! Mapper Interface Configurations !!!! -->
+        <javaClientGenerator targetPackage="com.bin.push.mybatis.base.dao" targetProject="src/main/java"
+                             type="XMLMAPPER">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!-- !!!! Table Configurations !!!! -->
+        <table tableName="pl_session" domainObjectName="Session"
+               enableCountByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" enableDeleteByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true" enableInsert="true"
+               enableSelectByPrimaryKey="true" enableUpdateByExample="true">
+        </table>
+        <table tableName="pl_message" domainObjectName="Message"
+               enableCountByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" enableDeleteByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true" enableInsert="true"
+               enableSelectByPrimaryKey="true" enableUpdateByExample="true">
+        </table>
+    </context>
+</generatorConfiguration>
