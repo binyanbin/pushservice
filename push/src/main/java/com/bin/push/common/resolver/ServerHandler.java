@@ -1,12 +1,12 @@
 package com.bin.push.common.resolver;
 
 import com.bin.push.common.protocol.MessageType;
-import com.bin.push.common.protocol.ReceiveMessaage;
+import com.bin.push.common.protocol.ReceiveMessage;
 import com.bin.push.common.protocol.SendMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-public class ServerHandler extends SimpleChannelInboundHandler<ReceiveMessaage> {
+public class ServerHandler extends SimpleChannelInboundHandler<ReceiveMessage> {
 
     private final ResolverFactory resolverFactory;
 
@@ -15,14 +15,21 @@ public class ServerHandler extends SimpleChannelInboundHandler<ReceiveMessaage> 
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, ReceiveMessaage receiveMessaage) throws Exception {
-        IResolver IResolver = resolverFactory.getMessageResolver(receiveMessaage);
-        SendMessage msg = IResolver.resolve(receiveMessaage);
+    protected void channelRead0(ChannelHandlerContext ctx, ReceiveMessage receiveMessage) {
+        System.out.println("biz says: " + receiveMessage.getSessionId());
+        IResolver IResolver = resolverFactory.getMessageResolver(receiveMessage);
+        SendMessage msg = IResolver.resolve(receiveMessage);
         if (msg.getType() == MessageType.CLOSE) {
             ctx.channel().close();
         } else {
             ctx.writeAndFlush(msg);
         }
+    }
+
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+        ctx.close();
     }
 
 }

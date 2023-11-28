@@ -6,8 +6,8 @@ import com.bin.push.mybatis.base.dao.SessionMapper;
 import com.bin.push.mybatis.base.model.Message;
 import com.bin.push.mybatis.base.model.MessageExample;
 import com.bin.push.mybatis.base.model.SessionExample;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -31,7 +31,7 @@ public class Repository {
         return sessionMapper.countByExample(example) > 0;
     }
 
-    public List<Message> listMessageBySessionId(String sessionId, Date begin,Date end) {
+    public List<Message> listMessageBySessionId(String sessionId, Date begin, Date end) {
 
         MessageExample example = new MessageExample();
         example.createCriteria().andSessionIdEqualTo(sessionId)
@@ -39,12 +39,12 @@ public class Repository {
         return messageMapper.selectByExample(example);
     }
 
-    public void sendMessage(List<Long> ids, Date now) {
-        MessageExample example = new MessageExample();
-        example.createCriteria().andIdIn(ids);
-        Message message = new Message();
-        message.setSendTime(now);
-        messageMapper.updateByExample(message, example);
+    @Transactional(rollbackFor = Exception.class)
+    public void sendMessage(List<Message> messages, Date now) {
+        for (Message message : messages) {
+            message.setSendTime(now);
+            messageMapper.updateByPrimaryKey(message);
+        }
     }
 
 

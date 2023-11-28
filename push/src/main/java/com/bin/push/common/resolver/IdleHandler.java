@@ -8,7 +8,7 @@ import io.netty.handler.timeout.IdleStateEvent;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
+public class IdleHandler extends ChannelInboundHandlerAdapter {
     private AtomicInteger lossConnectCount = new AtomicInteger(0);
 
     @Override
@@ -22,7 +22,7 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
                         ctx.channel().close();
                     } else {
                         ctx.writeAndFlush(MessageFactory.createCloseMsg());
-                        super.userEventTriggered(ctx,evt);
+                        super.userEventTriggered(ctx, evt);
                     }
                 }
             }

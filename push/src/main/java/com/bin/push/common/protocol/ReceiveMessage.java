@@ -1,7 +1,7 @@
 package com.bin.push.common.protocol;
 
 
-public class ReceiveMessaage {
+public class ReceiveMessage {
     private String sessionId;
     private MessageType messageType;
     private String body;

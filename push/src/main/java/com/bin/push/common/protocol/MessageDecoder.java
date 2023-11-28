@@ -11,16 +11,21 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf byteBuf, List<Object> out) {
-        ReceiveMessaage receiveMessaage = new ReceiveMessaage();
+        ReceiveMessage receiveMessage = new ReceiveMessage();
         CharSequence sessionId = byteBuf.readCharSequence(
                 32, Charset.defaultCharset());
-        receiveMessaage.setSessionId((String) sessionId);
-        receiveMessaage.setMessageType(MessageType.get(byteBuf.readByte()));
+        receiveMessage.setSessionId((String) sessionId);
+        receiveMessage.setMessageType(MessageType.get(byteBuf.readByte()));
         int bodyLength = byteBuf.readShort();
         if (bodyLength > 0) {
             CharSequence body = byteBuf.readCharSequence(bodyLength, Charset.defaultCharset());
-            receiveMessaage.setBody(body.toString());
+            receiveMessage.setBody(body.toString());
         }
-        out.add(receiveMessaage);
+        out.add(receiveMessage);
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+        ctx.writeAndFlush(MessageFactory.createCloseMsg());
     }
 }

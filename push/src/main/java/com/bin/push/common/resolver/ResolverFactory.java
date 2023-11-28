@@ -1,6 +1,6 @@
 package com.bin.push.common.resolver;
 
-import com.bin.push.common.protocol.ReceiveMessaage;
+import com.bin.push.common.protocol.ReceiveMessage;
 import com.bin.push.common.db.Repository;
 import org.springframework.context.ApplicationContext;
 
@@ -21,12 +21,12 @@ public final class ResolverFactory {
         RESOLVERS.add(resolver);
     }
 
-    public IResolver getMessageResolver(ReceiveMessaage receiveMessaage) {
+    public IResolver getMessageResolver(ReceiveMessage receiveMessage) {
         for (IResolver IResolver : RESOLVERS) {
-            if (IResolver.support(receiveMessaage)) {
+            if (IResolver.support(receiveMessage)) {
                 return IResolver;
             }
         }
-        throw new RuntimeException("cannot find resolver, message type: " + receiveMessaage.getMessageType());
+        throw new RuntimeException("cannot find resolver, message type: " + receiveMessage.getMessageType());
     }
 }

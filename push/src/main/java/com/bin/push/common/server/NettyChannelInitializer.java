@@ -3,7 +3,7 @@ package com.bin.push.common.server;
 
 import com.bin.push.common.protocol.MessageDecoder;
 import com.bin.push.common.protocol.MessageEncoder;
-import com.bin.push.common.resolver.HeartBeatHandler;
+import com.bin.push.common.resolver.IdleHandler;
 import com.bin.push.common.resolver.ResolverFactory;
 import com.bin.push.common.resolver.ServerHandler;
 import io.netty.channel.ChannelInitializer;
@@ -28,9 +28,8 @@ public class NettyChannelInitializer extends ChannelInitializer<SocketChannel> {
         pipeline.addLast(new LengthFieldPrepender(4));
         pipeline.addLast(new MessageDecoder());
         pipeline.addLast(new MessageEncoder());
-        pipeline.addLast(new IdleStateHandler(0, 0, 4));
-        pipeline.addLast(new HeartBeatHandler());
         pipeline.addLast(new ServerHandler(resolverFactory));
-
+        pipeline.addLast(new IdleStateHandler(0, 0, 4));
+        pipeline.addLast(new IdleHandler());
     }
 }

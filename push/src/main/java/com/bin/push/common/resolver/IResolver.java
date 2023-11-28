@@ -1,10 +1,10 @@
 package com.bin.push.common.resolver;
 
-import com.bin.push.common.protocol.ReceiveMessaage;
+import com.bin.push.common.protocol.ReceiveMessage;
 import com.bin.push.common.protocol.SendMessage;
 
 public interface IResolver {
-    boolean support(ReceiveMessaage receiveMessaage);
+    boolean support(ReceiveMessage receiveMessage);
 
-    SendMessage resolve(ReceiveMessaage receiveMessaage) throws Exception;
+    SendMessage resolve(ReceiveMessage receiveMessage);
 }
