@@ -1,8 +1,13 @@
 package com.bin.push.common.protocol;
 
 public enum MessageType {
-    PING((byte) 1), PONG((byte) 2), INFO((byte) 3), CLOSE((byte) 4), ;
-
+    PING((byte) 1),
+    PONG((byte) 2),
+    INFO((byte) 3),
+    CLOSE((byte) 4),
+    REGISTER((byte) 5),
+    TRANSFORM((byte) 6),
+    ;
     private byte type;
 
     MessageType(byte type) {

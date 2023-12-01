@@ -12,9 +12,6 @@ public class MessageDecoder extends ByteToMessageDecoder {
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf byteBuf, List<Object> out) {
         ReceiveMessage receiveMessage = new ReceiveMessage();
-        CharSequence sessionId = byteBuf.readCharSequence(
-                32, Charset.defaultCharset());
-        receiveMessage.setSessionId((String) sessionId);
         receiveMessage.setMessageType(MessageType.get(byteBuf.readByte()));
         int bodyLength = byteBuf.readShort();
         if (bodyLength > 0) {

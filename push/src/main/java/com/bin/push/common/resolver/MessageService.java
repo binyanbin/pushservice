@@ -2,7 +2,6 @@ package com.bin.push.common.resolver;
 
 import com.bin.push.common.db.Repository;
 import com.bin.push.common.protocol.MessageFactory;
-import com.bin.push.common.protocol.MessageType;
 import com.bin.push.common.protocol.ReceiveMessage;
 import com.bin.push.common.protocol.SendMessage;
 import com.bin.push.mybatis.base.model.Message;
@@ -13,25 +12,20 @@ import java.util.Date;
 import java.util.List;
 
 
-public class PingResolver implements IResolver {
+public class MessageService {
 
     private Repository repository;
 
-    public PingResolver(Repository repository) {
+    public MessageService(Repository repository) {
         this.repository = repository;
     }
 
-    @Override
-    public boolean support(ReceiveMessage receiveMessage) {
-        return receiveMessage.getMessageType() == MessageType.PING;
-    }
 
-    @Override
-    public SendMessage resolve(ReceiveMessage receiveMessage) {
-        if (repository.exitsSessionId(receiveMessage.getSessionId())) {
+    public SendMessage resolve(String sessionId) {
+        if (repository.exitsSessionId(sessionId)) {
             Date now = new Date();
             Date begin = DateUtils.addMinutes(now, -30);
-            List<Message> messages = repository.listMessageBySessionId(receiveMessage.getSessionId(), begin, now);
+            List<Message> messages = repository.listMessageBySessionId(sessionId, begin, now);
             if (messages.size() == 0) {
                 return MessageFactory.createPong();
             } else {

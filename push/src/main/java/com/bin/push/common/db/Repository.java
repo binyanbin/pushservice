@@ -6,6 +6,7 @@ import com.bin.push.mybatis.base.dao.SessionMapper;
 import com.bin.push.mybatis.base.model.Message;
 import com.bin.push.mybatis.base.model.MessageExample;
 import com.bin.push.mybatis.base.model.SessionExample;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,9 +21,9 @@ public class Repository {
 
     private MessageMapper messageMapper;
 
-    public Repository(SessionMapper sessionMapper, MessageMapper messageMapper) {
-        this.sessionMapper = sessionMapper;
-        this.messageMapper = messageMapper;
+    public Repository(ApplicationContext applicationContext) {
+        this.sessionMapper = applicationContext.getBean(SessionMapper.class);
+        this.messageMapper = applicationContext.getBean(MessageMapper.class);
     }
 
     public boolean exitsSessionId(String sessionId) {

@@ -4,7 +4,7 @@ package com.bin.push.common.server;
 import com.bin.push.common.protocol.MessageDecoder;
 import com.bin.push.common.protocol.MessageEncoder;
 import com.bin.push.common.resolver.IdleHandler;
-import com.bin.push.common.resolver.ResolverFactory;
+import com.bin.push.common.resolver.MessageService;
 import com.bin.push.common.resolver.ServerHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -15,10 +15,10 @@ import io.netty.handler.timeout.IdleStateHandler;
 
 
 public class NettyChannelInitializer extends ChannelInitializer<SocketChannel> {
-    private ResolverFactory resolverFactory;
+    private MessageService messageService;
 
-    public NettyChannelInitializer(ResolverFactory resolverFactory) {
-        this.resolverFactory = resolverFactory;
+    public NettyChannelInitializer(MessageService messageService) {
+        this.messageService = messageService;
     }
 
     @Override
@@ -28,8 +28,8 @@ public class NettyChannelInitializer extends ChannelInitializer<SocketChannel> {
         pipeline.addLast(new LengthFieldPrepender(4));
         pipeline.addLast(new MessageDecoder());
         pipeline.addLast(new MessageEncoder());
-        pipeline.addLast(new ServerHandler(resolverFactory));
-        pipeline.addLast(new IdleStateHandler(0, 0, 4));
+        pipeline.addLast(new ServerHandler(messageService));
+        pipeline.addLast(new IdleStateHandler(0, 0, 10));
         pipeline.addLast(new IdleHandler());
     }
 }
