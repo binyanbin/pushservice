@@ -26,6 +26,14 @@ public class ChannelManager {
         return MAP_CHANNEL.get(sessionId);
     }
 
+    public static String getSessionId(Channel channel) {
+        if (MAP_SESSION.containsKey(channel.id().asLongText())) {
+            return MAP_SESSION.get(channel.id().asLongText());
+        } else {
+            return "";
+        }
+    }
+
     public static boolean contain(Channel channel) {
         return MAP_SESSION.containsKey(channel.id().asLongText());
     }

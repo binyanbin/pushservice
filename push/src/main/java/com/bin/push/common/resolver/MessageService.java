@@ -2,9 +2,9 @@ package com.bin.push.common.resolver;
 
 import com.bin.push.common.db.Repository;
 import com.bin.push.common.protocol.MessageFactory;
-import com.bin.push.common.protocol.ReceiveMessage;
 import com.bin.push.common.protocol.SendMessage;
 import com.bin.push.mybatis.base.model.Message;
+import com.bin.push.mybatis.base.model.Session;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.time.DateUtils;
 
@@ -22,10 +22,11 @@ public class MessageService {
 
 
     public SendMessage resolve(String sessionId) {
-        if (repository.exitsSessionId(sessionId)) {
+        Session session = repository.getSession(sessionId);
+        if (session != null) {
             Date now = new Date();
             Date begin = DateUtils.addMinutes(now, -30);
-            List<Message> messages = repository.listMessageBySessionId(sessionId, begin, now);
+            List<Message> messages = repository.listMessageBySessionId(session.getUserId().toString(), begin, now);
             if (messages.size() == 0) {
                 return MessageFactory.createPong();
             } else {

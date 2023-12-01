@@ -26,10 +26,10 @@ public class NettyChannelInitializer extends ChannelInitializer<SocketChannel> {
         ChannelPipeline pipeline = ch.pipeline();
         pipeline.addLast(new LengthFieldBasedFrameDecoder(2 * 1024, 0, 4, 0, 4));
         pipeline.addLast(new LengthFieldPrepender(4));
+        pipeline.addLast(new IdleStateHandler(30, 0, 0));
         pipeline.addLast(new MessageDecoder());
         pipeline.addLast(new MessageEncoder());
         pipeline.addLast(new ServerHandler(messageService));
-        pipeline.addLast(new IdleStateHandler(0, 0, 10));
         pipeline.addLast(new IdleHandler());
     }
 }

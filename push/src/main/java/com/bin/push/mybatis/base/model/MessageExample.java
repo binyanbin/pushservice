@@ -255,73 +255,73 @@ public class MessageExample {
             return (Criteria) this;
         }
 
-        public Criteria andSessionIdIsNull() {
-            addCriterion("session_id is null");
+        public Criteria andUserIdIsNull() {
+            addCriterion("user_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andSessionIdIsNotNull() {
-            addCriterion("session_id is not null");
+        public Criteria andUserIdIsNotNull() {
+            addCriterion("user_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSessionIdEqualTo(String value) {
-            addCriterion("session_id =", value, "sessionId");
+        public Criteria andUserIdEqualTo(String value) {
+            addCriterion("user_id =", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andSessionIdNotEqualTo(String value) {
-            addCriterion("session_id <>", value, "sessionId");
+        public Criteria andUserIdNotEqualTo(String value) {
+            addCriterion("user_id <>", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andSessionIdGreaterThan(String value) {
-            addCriterion("session_id >", value, "sessionId");
+        public Criteria andUserIdGreaterThan(String value) {
+            addCriterion("user_id >", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andSessionIdGreaterThanOrEqualTo(String value) {
-            addCriterion("session_id >=", value, "sessionId");
+        public Criteria andUserIdGreaterThanOrEqualTo(String value) {
+            addCriterion("user_id >=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andSessionIdLessThan(String value) {
-            addCriterion("session_id <", value, "sessionId");
+        public Criteria andUserIdLessThan(String value) {
+            addCriterion("user_id <", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andSessionIdLessThanOrEqualTo(String value) {
-            addCriterion("session_id <=", value, "sessionId");
+        public Criteria andUserIdLessThanOrEqualTo(String value) {
+            addCriterion("user_id <=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andSessionIdLike(String value) {
-            addCriterion("session_id like", value, "sessionId");
+        public Criteria andUserIdLike(String value) {
+            addCriterion("user_id like", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andSessionIdNotLike(String value) {
-            addCriterion("session_id not like", value, "sessionId");
+        public Criteria andUserIdNotLike(String value) {
+            addCriterion("user_id not like", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andSessionIdIn(List<String> values) {
-            addCriterion("session_id in", values, "sessionId");
+        public Criteria andUserIdIn(List<String> values) {
+            addCriterion("user_id in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andSessionIdNotIn(List<String> values) {
-            addCriterion("session_id not in", values, "sessionId");
+        public Criteria andUserIdNotIn(List<String> values) {
+            addCriterion("user_id not in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andSessionIdBetween(String value1, String value2) {
-            addCriterion("session_id between", value1, value2, "sessionId");
+        public Criteria andUserIdBetween(String value1, String value2) {
+            addCriterion("user_id between", value1, value2, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andSessionIdNotBetween(String value1, String value2) {
-            addCriterion("session_id not between", value1, value2, "sessionId");
+        public Criteria andUserIdNotBetween(String value1, String value2) {
+            addCriterion("user_id not between", value1, value2, "userId");
             return (Criteria) this;
         }
 
