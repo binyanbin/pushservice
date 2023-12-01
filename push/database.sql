@@ -1,13 +1,13 @@
 CREATE TABLE `pl_message` (
                               `id` BIGINT(19) NOT NULL,
-                              `session_id` VARCHAR(45) NOT NULL COLLATE 'utf8mb3_general_ci',
+                              `user_id` VARCHAR(45) NOT NULL COLLATE 'utf8mb3_general_ci',
                               `content` VARCHAR(1000) NOT NULL DEFAULT '' COLLATE 'utf8mb3_general_ci',
                               `created_time` DATETIME NOT NULL,
                               `send_time` DATETIME NULL DEFAULT NULL,
                               `is_read` TINYINT(3) NULL DEFAULT '0',
                               `branch_id` BIGINT(19) NULL DEFAULT NULL,
                               PRIMARY KEY (`id`) USING BTREE,
-                              INDEX `receiver_index` (`session_id`) USING BTREE
+                              INDEX `receiver_index` (`user_id`) USING BTREE
 );
 CREATE TABLE `pl_session` (
                               `id` BIGINT(19) NOT NULL COMMENT '标识',
