@@ -1,9 +1,10 @@
 package com.bin.push.common.protocol;
 
 
-public class SendMessage {
+public class MessageP {
     private MessageType type;
     private String body;
+
 
     public MessageType getType() {
         return type;
@@ -13,7 +14,6 @@ public class SendMessage {
         this.type = type;
     }
 
-
     public String getBody() {
         return body;
     }
@@ -21,4 +21,5 @@ public class SendMessage {
     public void setBody(String body) {
         this.body = body;
     }
+
 }

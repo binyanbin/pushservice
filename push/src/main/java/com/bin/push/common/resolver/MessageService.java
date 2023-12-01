@@ -2,7 +2,7 @@ package com.bin.push.common.resolver;
 
 import com.bin.push.common.db.Repository;
 import com.bin.push.common.protocol.MessageFactory;
-import com.bin.push.common.protocol.SendMessage;
+import com.bin.push.common.protocol.MessageP;
 import com.bin.push.mybatis.base.model.Message;
 import com.bin.push.mybatis.base.model.Session;
 import com.google.common.collect.Lists;
@@ -21,7 +21,7 @@ public class MessageService {
     }
 
 
-    public SendMessage resolve(String sessionId) {
+    public MessageP resolve(String sessionId) {
         Session session = repository.getSession(sessionId);
         if (session != null) {
             Date now = new Date();

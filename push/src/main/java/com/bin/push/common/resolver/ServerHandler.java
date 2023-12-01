@@ -1,14 +1,13 @@
 package com.bin.push.common.resolver;
 
 import com.bin.push.common.protocol.MessageFactory;
+import com.bin.push.common.protocol.MessageP;
 import com.bin.push.common.protocol.MessageType;
-import com.bin.push.common.protocol.ReceiveMessage;
-import com.bin.push.common.protocol.SendMessage;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-public class ServerHandler extends SimpleChannelInboundHandler<ReceiveMessage> {
+public class ServerHandler extends SimpleChannelInboundHandler<MessageP> {
 
 
     private final MessageService messageService;
@@ -18,37 +17,34 @@ public class ServerHandler extends SimpleChannelInboundHandler<ReceiveMessage> {
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, ReceiveMessage receiveMessage) {
-        if (receiveMessage.getMessageType().equals(MessageType.REGISTER)) {
-            String sessionId = receiveMessage.getBody();
+    protected void channelRead0(ChannelHandlerContext ctx, MessageP messageP) {
+        if (messageP.getType().equals(MessageType.REGISTER)) {
+            String sessionId = messageP.getBody();
             if (sessionId.length() == 32) {
                 ChannelManager.register(sessionId, ctx.channel());
-                SendMessage msg = messageService.resolve(sessionId);
+                MessageP msg = messageService.resolve(sessionId);
                 if (msg.getType() == MessageType.CLOSE) {
                     ChannelManager.close(ctx.channel());
                 } else {
                     ctx.writeAndFlush(msg);
                 }
             }
-        } else if (receiveMessage.getMessageType().equals(MessageType.TRANSFORM)) {
-            String sessionId = receiveMessage.getBody();
+        } else if (messageP.getType().equals(MessageType.TRANSFORM)) {
+            String sessionId = messageP.getBody();
             if (sessionId.length() == 32) {
                 Channel channel = ChannelManager.getChannel(sessionId);
                 if (channel != null) {
-                    SendMessage msg = messageService.resolve(sessionId);
+                    MessageP msg = messageService.resolve(sessionId);
                     if (msg.getType() == MessageType.CLOSE) {
                         ChannelManager.close(channel);
-                    } else {
+                    } else if (msg.getType().equals(MessageType.INFO)) {
                         channel.writeAndFlush(msg);
                     }
-                } else {
-                    ctx.writeAndFlush(MessageFactory.createPong());
                 }
-            } else {
-                ctx.writeAndFlush(MessageFactory.createPong());
             }
+            ctx.writeAndFlush(MessageFactory.createPong());
         } else {
-            if (receiveMessage.getMessageType().equals(MessageType.PING)) {
+            if (messageP.getType().equals(MessageType.PING)) {
                 if (!ChannelManager.contain(ctx.channel())) {
                     ChannelManager.close(ctx.channel());
                     return;

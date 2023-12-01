@@ -11,14 +11,14 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf byteBuf, List<Object> out) {
-        ReceiveMessage receiveMessage = new ReceiveMessage();
-        receiveMessage.setMessageType(MessageType.get(byteBuf.readByte()));
+        MessageP messageP = new MessageP();
+        messageP.setType(MessageType.get(byteBuf.readByte()));
         int bodyLength = byteBuf.readShort();
         if (bodyLength > 0) {
             CharSequence body = byteBuf.readCharSequence(bodyLength, Charset.defaultCharset());
-            receiveMessage.setBody(body.toString());
+            messageP.setBody(body.toString());
         }
-        out.add(receiveMessage);
+        out.add(messageP);
     }
 
     @Override

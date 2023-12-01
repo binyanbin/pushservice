@@ -10,10 +10,10 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 
-public class MessageEncoder extends MessageToByteEncoder<SendMessage> {
+public class MessageEncoder extends MessageToByteEncoder<MessageP> {
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, SendMessage message, ByteBuf out) {
+    protected void encode(ChannelHandlerContext ctx, MessageP message, ByteBuf out) {
         out.writeByte(message.getType().getType());
         if (StringUtils.hasText(message.getBody())) {
             out.writeShort(message.getBody().getBytes(StandardCharsets.UTF_8).length);
