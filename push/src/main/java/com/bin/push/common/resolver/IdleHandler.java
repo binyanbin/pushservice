@@ -22,13 +22,13 @@ public class IdleHandler extends ChannelInboundHandlerAdapter {
                     if (lossConnectCount.get() > 2) {
                         String sessionId = ChannelManager.getSessionId(ctx.channel());
                         if (StringUtils.hasText(sessionId)) {
-                            System.out.println("["+sessionId+"]closed" );
+                            System.out.println("[" + sessionId + "]closed");
                         }
                         ChannelManager.close(ctx.channel());
                     } else {
                         String sessionId = ChannelManager.getSessionId(ctx.channel());
                         if (StringUtils.hasText(sessionId)) {
-                            System.out.println("["+sessionId+"] will be closed" );
+                            System.out.println("[" + sessionId + "] will be closed");
                         }
                         ctx.writeAndFlush(MessageFactory.createCloseMsg());
                         super.userEventTriggered(ctx, evt);
@@ -40,13 +40,9 @@ public class IdleHandler extends ChannelInboundHandlerAdapter {
         }
     }
 
-    @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        System.out.println("client says: " + msg.toString());
-    }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        ctx.close();
+        ChannelManager.close(ctx.channel());
     }
 }
