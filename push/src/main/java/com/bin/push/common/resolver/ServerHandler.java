@@ -21,6 +21,10 @@ public class ServerHandler extends SimpleChannelInboundHandler<MessageP> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, MessageP messageP) {
+        if (messageP.getType().equals(MessageType.UNKNOWN)) {
+            ChannelManager.close(ctx.channel());
+            return;
+        }
         if (messageP.getType().equals(MessageType.REGISTER)) {
             String sessionId = messageP.getBody();
             if (sessionId.length() == 32) {

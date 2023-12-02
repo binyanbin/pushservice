@@ -7,6 +7,7 @@ public enum MessageType {
     CLOSE((byte) 4),//服务端关闭链接消息
     REGISTER((byte) 5),//客户端注册消息
     TRANSFORM((byte) 6),//业务系统推送请求消息
+    UNKNOWN((byte) 99),//未知消息
     ;
     private byte type;
 
@@ -20,7 +21,7 @@ public enum MessageType {
                 return value;
             }
         }
-        throw new RuntimeException("unsupported type: " + type);
+        return MessageType.UNKNOWN;
     }
 
     public int getType() {
