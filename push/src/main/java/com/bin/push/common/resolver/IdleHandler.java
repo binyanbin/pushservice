@@ -9,6 +9,9 @@ import org.springframework.util.StringUtils;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * 关闭长时间未发心跳的连接
+ */
 public class IdleHandler extends ChannelInboundHandlerAdapter {
     private AtomicInteger lossConnectCount = new AtomicInteger(0);
 

@@ -7,6 +7,9 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
+/**
+ * 业务处理逻辑
+ */
 public class ServerHandler extends SimpleChannelInboundHandler<MessageP> {
 
 
@@ -22,7 +25,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<MessageP> {
             String sessionId = messageP.getBody();
             if (sessionId.length() == 32) {
                 ChannelManager.register(sessionId, ctx.channel());
-                MessageP msg = messageService.resolve(sessionId);
+                MessageP msg = messageService.getMessage(sessionId);
                 if (msg.getType() == MessageType.CLOSE) {
                     ChannelManager.close(ctx.channel());
                 } else {
@@ -34,7 +37,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<MessageP> {
             if (sessionId.length() == 32) {
                 Channel channel = ChannelManager.getChannel(sessionId);
                 if (channel != null) {
-                    MessageP msg = messageService.resolve(sessionId);
+                    MessageP msg = messageService.getMessage(sessionId);
                     if (msg.getType() == MessageType.CLOSE) {
                         ChannelManager.close(channel);
                     } else if (msg.getType().equals(MessageType.INFO)) {

@@ -21,7 +21,7 @@ public class MessageService {
     }
 
 
-    public MessageP resolve(String sessionId) {
+    public MessageP getMessage(String sessionId) {
         Session session = repository.getSession(sessionId);
         if (session != null) {
             Date now = new Date();

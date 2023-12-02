@@ -5,6 +5,9 @@ import io.netty.channel.Channel;
 
 import java.util.Map;
 
+/**
+ * 连接管理
+ */
 public class ChannelManager {
     private static final Map<String, Channel> MAP_CHANNEL = Maps.newConcurrentMap();
     private static final Map<String, String> MAP_SESSION = Maps.newConcurrentMap();
