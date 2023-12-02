@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class MessageService {
+public class MessageService implements IMessageService {
 
     private Repository repository;
 

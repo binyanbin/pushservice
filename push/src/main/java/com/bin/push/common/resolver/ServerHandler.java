@@ -13,9 +13,9 @@ import io.netty.channel.SimpleChannelInboundHandler;
 public class ServerHandler extends SimpleChannelInboundHandler<MessageP> {
 
 
-    private final MessageService messageService;
+    private final IMessageService messageService;
 
-    public ServerHandler(MessageService messageService) {
+    public ServerHandler(IMessageService messageService) {
         this.messageService = messageService;
     }
 
