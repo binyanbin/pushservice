@@ -1,4 +1,4 @@
-package com.bin.push.common;
+package com.bin.push.client;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -9,7 +9,18 @@ import java.net.Socket;
  */
 public class BizClient {
 
-    public static void push(String ip, int port, String sessionId) throws IOException {
+    private String ip;
+    private Integer port;
+    private String sessionId;
+
+    public BizClient(String ip, Integer port, String sessionId) {
+        this.ip = ip;
+        this.port = port;
+        this.sessionId = sessionId;
+    }
+
+    //触发推送
+    public void active() throws IOException {
         Socket socket = new Socket(ip, port);
         DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
         dataOutputStream.writeInt(35);
@@ -21,7 +32,8 @@ public class BizClient {
     }
 
     public static void main(String[] args) throws Exception {
-        push("127.0.0.1", 3333, "bc94a6b80f0345d9a2a221668890f895");
+        BizClient bizClient = new BizClient("127.0.0.1", 3333, "bc94a6b80f0345d9a2a221668890f895");
+        bizClient.active();
     }
 
 }
