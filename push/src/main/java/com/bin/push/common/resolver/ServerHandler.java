@@ -31,6 +31,8 @@ public class ServerHandler extends SimpleChannelInboundHandler<MessageP> {
                 } else {
                     ctx.writeAndFlush(msg);
                 }
+            } else {
+                ChannelManager.close(ctx.channel());
             }
         } else if (messageP.getType().equals(MessageType.TRANSFORM)) {
             String sessionId = messageP.getBody();
@@ -44,8 +46,10 @@ public class ServerHandler extends SimpleChannelInboundHandler<MessageP> {
                         channel.writeAndFlush(msg);
                     }
                 }
+                ctx.writeAndFlush(MessageFactory.createPong());
+            } else {
+                ChannelManager.close(ctx.channel());
             }
-            ctx.writeAndFlush(MessageFactory.createPong());
         } else {
             if (messageP.getType().equals(MessageType.PING)) {
                 if (!ChannelManager.contain(ctx.channel())) {
